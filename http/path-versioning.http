@@ -1,0 +1,49 @@
+### Path versioning (old)
+
+# GET V1
+GET http://localhost:8081/api/v1/animals-old-path
+
+###
+# GET V2
+GET http://localhost:8081/api/v2/animals-old-path
+
+###
+# Default
+GET http://localhost:8081/api/animals-old-path
+
+
+### Path versioning (new)
+
+# GET V1
+GET http://localhost:8081/api/v1/animals
+
+###
+# GET V2
+GET http://localhost:8081/api/v2/animals
+
+###
+# GET V1.1
+GET http://localhost:8081/api/v1.1/animals
+
+###
+# GET Individual animal V1
+GET http://localhost:8081/api/v1/animals/1
+
+###
+# POST V1
+POST http://localhost:8081/api/v1/animals
+Content-Type: text/plain
+
+Monkey
+
+###
+# Default - no version specified
+GET http://localhost:8081/api/animals
+
+###
+# Invalid path structure
+GET http://localhost:8081/animals/v1/api
+
+###
+# Unsupported version
+GET http://localhost:8081/api/v99/animals

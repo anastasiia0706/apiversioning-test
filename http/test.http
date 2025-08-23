@@ -1,0 +1,4 @@
+### Basic versioning
+
+# GET Basic
+GET http://localhost:8081/test/basic
