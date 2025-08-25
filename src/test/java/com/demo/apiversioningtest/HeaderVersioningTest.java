@@ -39,8 +39,15 @@ public class HeaderVersioningTest {
     }
 
     @Test
+    void testDefaultDefaultVersionIsSetToV2() throws Exception {
+        mockMvc.perform(get("/api/animals-header"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("V2: Lion Leo 5 years old, Elephant Ellie 12 years old (header)")));
+    }
+
+    @Test
     void testGetAnimalsV1() throws Exception {
-        mockMvc.perform(get("/api/animals")
+        mockMvc.perform(get("/api/animals-header")
                         .header("X-API-Version", "v1"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(org.hamcrest.Matchers.containsString("V1: Lion, Elephant (header)")));
@@ -48,15 +55,15 @@ public class HeaderVersioningTest {
 
     @Test
     void testGetAnimalsV2() throws Exception {
-        mockMvc.perform(get("/api/animals")
+        mockMvc.perform(get("/api/animals-header")
                         .header("X-API-Version", "v2"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(org.hamcrest.Matchers.containsString("Header V2: Lion Leo 5 years old")));
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("V2: Lion Leo 5 years old, Elephant Ellie 12 years old (header)")));
     }
 
     @Test
     void testGetAnimalsV1_1() throws Exception {
-        mockMvc.perform(get("/api/animals")
+        mockMvc.perform(get("/api/animals-header")
                         .header("X-API-Version", "v1.1"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(org.hamcrest.Matchers.containsString("V1.1: Lion, Elephant - Africa (header)")));
@@ -64,7 +71,7 @@ public class HeaderVersioningTest {
 
     @Test
     void testGetIndividualAnimalV1() throws Exception {
-        mockMvc.perform(get("/api/animals/1")
+        mockMvc.perform(get("/api/animals-header/1")
                         .header("X-API-Version", "v1"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(org.hamcrest.Matchers.containsString("V1: Animal ID 1 Lion (header)")));
@@ -72,7 +79,7 @@ public class HeaderVersioningTest {
 
     @Test
     void testPostAnimalV1() throws Exception {
-        mockMvc.perform(post("/api/animals")
+        mockMvc.perform(post("/api/animals-header")
                         .header("X-API-Version", "v1")
                         .content("Monkey")
                         .contentType(MediaType.TEXT_PLAIN))
@@ -80,48 +87,63 @@ public class HeaderVersioningTest {
                 .andExpect(content().string(org.hamcrest.Matchers.containsString("V1: Created animal: Monkey (header)")));
     }
 
+
     @Test
-    void testDefault() throws Exception {
-        mockMvc.perform(get("/api/animals"))
+    void testPutAnimalV1() throws Exception {
+        mockMvc.perform(put("/api/animals-header/1")
+                        .header("X-API-Version", "v1")
+                        .content("Tiger")
+                        .contentType(MediaType.TEXT_PLAIN))
                 .andExpect(status().isOk())
-                .andExpect(content().string(org.hamcrest.Matchers.containsString("Default (header)")));
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("V1: Updated animal ID 1 to Tiger (header)")));
+    }
+
+    @Test
+    void testPatchAnimalV1() throws Exception {
+        mockMvc.perform(patch("/api/animals-header/1")
+                        .header("X-API-Version", "v1")
+                        .content("Zebra")
+                        .contentType(MediaType.TEXT_PLAIN))
+                .andExpect(status().isOk())
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("V1: Patched animal ID 1 with Zebra (header)")));
+    }
+
+    @Test
+    void testDeleteAnimalV1() throws Exception {
+        mockMvc.perform(delete("/api/animals-header/1")
+                        .header("X-API-Version", "v1"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("V1: Deleted animal ID 1 (header)")));
     }
 
     @Test
     void testUnsupportedVersion() throws Exception {
-        mockMvc.perform(get("/api/animals")
+        mockMvc.perform(get("/api/animals-header")
                         .header("X-API-Version", "v99"))
                 .andExpect(status().is4xxClientError());
     }
 
     @Test
     void testInvalidPath() throws Exception {
-        mockMvc.perform(get("/animals/v1/api")
+        mockMvc.perform(get("/animals-header/v1/api")
                         .header("X-API-Version", "v2"))
                 .andExpect(status().is4xxClientError());
     }
 
     @Test
     void testAlternativeHeaderName() throws Exception {
-        mockMvc.perform(get("/animals/v1/api")
+        mockMvc.perform(get("/api/animals-header")
                         .header("API-Version", "v2"))
-                .andExpect(status().is4xxClientError());
+                .andExpect(status().isOk())
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("V2: Lion Leo 5 years old, Elephant Ellie 12 years old (header)")));
     }
 
     @Test
     void testCaseSensitivityHeader() throws Exception {
-        mockMvc.perform(get("/api/animals")
+        mockMvc.perform(get("/api/animals-header")
                         .header("x-api-version", "v1"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(org.hamcrest.Matchers.containsString("V1: Lion, Elephant (header)")));
     }
 
-    @Test
-    void testMultipleHeaders() throws Exception {
-        mockMvc.perform(get("/api/animals")
-                        .header("X-API-Version", "v2")
-                        .header("Accept", "application/json"))
-                .andExpect(status().isOk())
-                .andExpect(content().string(org.hamcrest.Matchers.containsString("Header V2")));
-    }
 }

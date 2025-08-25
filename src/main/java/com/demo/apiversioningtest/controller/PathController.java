@@ -3,11 +3,16 @@ package com.demo.apiversioningtest.controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/{version}/animals") //Note: Remove {version} later, it should work automatically with configurer.usePathSegment(1)
+@RequestMapping("/api/{version}/animals-path") //Note: Remove {version} later, it should work automatically with configurer.usePathSegment(1)
 public class PathController {
 
+    @GetMapping
+    public String getAnimalsDefault() {
+        return "Default (path)";
+    }
+
     @GetMapping(version = "v1")
-    public String getAnimalsV1() {return "V1: Lion, Elephant (path)";}
+    public String getAnimalsV1() { return "V1: Lion, Elephant (path)"; }
 
     @GetMapping(version = "v2")
     public String getAnimalsV2() {
@@ -25,21 +30,14 @@ public class PathController {
     }
 
     @PostMapping(version = "v1")
-    public String addAnimalV1(@RequestBody String animalName) {
-        return "V1: Created animal: " + animalName + " (path)";
-    }
+    public String addAnimalV1(@RequestBody String animalName) { return "V1: Created animal: " + animalName + " (path)"; }
 
-    // Note: Does not work now, but should work when removing {version} from @RequestMapping
-    @GetMapping
-    public String getAnimalsDefault() {
-        return "Default (path)";
-    }
+    @PutMapping(value = "/{id}", version = "v1")
+    public String updateAnimalV1(@PathVariable int id, @RequestBody String animalName) { return "V1: Updated animal ID " + id + " to " + animalName + " (path)"; }
 
-    // Note: {"v1", "v2"} is red, is not supported by IDEA yet
-    /*
-    @GetMapping(value = "/test", version = {"v1", "v2"})
-    public String getMultipleVersions() {
-        return "V1 and V2 (path)";
-    }
-    */
+    @PatchMapping(value = "/{id}", version = "v1")
+    public String patchAnimalV1(@PathVariable int id, @RequestBody String animalName) { return "V1: Patched animal ID " + id + " with " + animalName + " (path)"; }
+
+    @DeleteMapping(value = "/{id}", version = "v1")
+    public String deleteAnimalV1(@PathVariable int id) { return "V1: Deleted animal ID " + id + " (path)"; }
 }

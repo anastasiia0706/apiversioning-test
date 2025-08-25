@@ -17,54 +17,75 @@ GET http://localhost:8081/api/animals-old-header
 
 ### Header versioning (new)
 
+###
+# Default - no header
+GET http://localhost:8081/api/animals-header
+
 # GET V1
-GET http://localhost:8081/api/animals
+GET http://localhost:8081/api/animals-header
 X-API-Version: v1
 
 ###
 # GET V2
-GET http://localhost:8081/api/animals
+GET http://localhost:8081/api/animals-header
 X-API-Version: v2
 
 ###
 # GET V1.1
-GET http://localhost:8081/api/animals
+GET http://localhost:8081/api/animals-header
 X-API-Version: v1.1
 
 ###
 # GET Individual animal V1
-GET http://localhost:8081/api/animals/1
+GET http://localhost:8081/api/animals-header/1
 X-API-Version: v1
 
 ###
 # POST V1
-POST http://localhost:8081/api/animals
+POST http://localhost:8081/api/animals-header
 X-API-Version: v1
 Content-Type: text/plain
 
 Monkey
 
 ###
-# Default - no header
-GET http://localhost:8081/api/animals
+# PUT V1
+PUT http://localhost:8081/api/animals-header/1
+X-API-Version: v1
+Content-Type: text/plain
+
+Tiger
 
 ###
-# Invalid version
-GET http://localhost:8081/api/animals
+# PATCH V1
+PATCH http://localhost:8081/api/animals-header/1
+X-API-Version: v1
+Content-Type: text/plain
+
+Zebra
+
+###
+# DELETE V1
+DELETE http://localhost:8081/api/animals-header/1
+X-API-Version: v1
+
+###
+# Unsupported version (expected response code: 400)
+GET http://localhost:8081/api/animals-header
 X-API-Version: v99
 
 ###
+# Invalid path (expected response code: 404)
+GET http://localhost:8081/animals-header/v1/api
+X-API-Version: v2
+
+###
 # Alternative header name
-GET http://localhost:8081/api/animals
-API-Version: v1
+GET http://localhost:8081/api/animals-header
+API-Version: v2
 
 ###
 # Case sensitivity
-GET http://localhost:8081/api/animals
+GET http://localhost:8081/api/animals-header
 x-api-version: v1
 
-###
-# Multiple headers
-GET http://localhost:8081/api/animals
-X-API-Version: v2
-Accept: application/json

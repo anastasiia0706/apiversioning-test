@@ -1,0 +1,69 @@
+### Query versioning (old)
+
+# GET V1
+GET http://localhost:8081/api/animals-old-query?version=v1
+
+###
+# GET V2
+GET http://localhost:8081/api/animals-old-query?version=v2
+
+###
+# GET Default
+GET http://localhost:8081/api/animals-old-query
+
+
+
+### Query versioning (new)
+
+###
+# Default - no version param (Should return 400 because configurer.setVersionRequired(true);)
+GET http://localhost:8081/api/animals-query
+
+###
+# GET V1
+GET http://localhost:8081/api/animals-query?version=v1
+
+###
+# GET V2
+GET http://localhost:8081/api/animals-query?version=v2
+
+###
+# GET V3 (Should return 400 because configurer.setVersionRequired(true);)
+GET http://localhost:8081/api/animals-query?version=v3
+
+###
+# GET V1.1
+GET http://localhost:8081/api/animals-query?version=v1.1
+
+###
+# GET Individual animal V1
+GET http://localhost:8081/api/animals-query/1?version=v1
+
+###
+# POST V1
+POST http://localhost:8081/api/animals-query?version=v1
+Content-Type: text/plain
+
+Monkey
+
+###
+# PUT V1
+PUT http://localhost:8081/api/animals-query/1?version=v1
+Content-Type: text/plain
+
+Tiger
+
+###
+# PATCH V1
+PATCH http://localhost:8081/api/animals-query/1?version=v1
+Content-Type: text/plain
+
+Zebra
+
+###
+# DELETE V1
+DELETE http://localhost:8081/api/animals-query/1?version=v1
+
+###
+# Unsupported version (expected response code: 400)
+GET http://localhost:8081/api/animals-query?version=v99

@@ -9,11 +9,10 @@ public class HeaderVersioningConfig implements WebMvcConfigurer {
 
     @Override
     public void configureApiVersioning(ApiVersionConfigurer configurer) {
-        configurer.useRequestHeader("X-API-Version"); // <- Note: uncomment to test header versioning
-
-        // Note: Is not supported yet by IDEA
-        // configurer.supportedVersions("v1", "v2", "v1.1");
-        // configurer.defaultVersion("v2");
-        // configurer.versionRequired(false);
+//        NOTE: Uncomment below to test header versioning
+        configurer.useRequestHeader("X-API-Version");
+        configurer.addSupportedVersions("v1", "v2", "v1.1");
+        configurer.setDefaultVersion("v2");
+        configurer.setVersionRequired(false);
     }
 }

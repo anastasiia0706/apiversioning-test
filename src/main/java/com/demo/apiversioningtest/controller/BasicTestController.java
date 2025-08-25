@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/test")
 public class BasicTestController {
 
-    // does not work if configurer.usePathSegment(1)
     @GetMapping("/basic")
     public String basicTest() {
         return "Basic test";

@@ -1,0 +1,91 @@
+### Media Type versioning (old)
+
+# GET V1
+GET http://localhost:8081/api/animals-old-media
+Accept: application/json;version=v1
+
+###
+# GET V2
+GET http://localhost:8081/api/animals-old-media
+Accept: application/json;version=v2
+
+###
+# GET Default
+GET http://localhost:8081/api/animals-old-media
+
+
+
+### Media Type versioning (new)
+
+###
+# Default - no Accept header
+GET http://localhost:8081/api/animals-media
+
+###
+# GET V1
+GET http://localhost:8081/api/animals-media
+Accept: application/json;version=v1
+
+###
+# GET V2
+GET http://localhost:8081/api/animals-media
+Accept: application/json;version=v2
+
+###
+# GET V1.1
+GET http://localhost:8081/api/animals-media
+Accept: application/json;version=v1.1
+
+###
+# GET Individual animal V1
+GET http://localhost:8081/api/animals-media/1
+Accept: application/json;version=v1
+
+###
+# POST V1
+POST http://localhost:8081/api/animals-media
+Accept: application/json;version=v1
+Content-Type: text/plain
+
+Monkey
+
+###
+# PUT V1
+PUT http://localhost:8081/api/animals-media/1
+Accept: application/json;version=v1
+Content-Type: text/plain
+
+Tiger
+
+###
+# PATCH V1
+PATCH http://localhost:8081/api/animals-media/1
+Accept: application/json;version=v1
+Content-Type: text/plain
+
+Zebra
+
+###
+# DELETE V1
+DELETE http://localhost:8081/api/animals-media/1
+Accept: application/json;version=v1
+
+###
+# Unsupported version (expected response code: 400)
+GET http://localhost:8081/api/animals-media
+Accept: application/json;version=v99
+
+###
+# Invalid path (expected response code: 404)
+GET http://localhost:8081/animals-media/v1/api
+Accept: application/json;version=v2
+
+###
+# Alternative media type
+GET http://localhost:8081/api/animals-media
+Accept: application/xml;version=v2
+
+###
+# Case sensitivity
+GET http://localhost:8081/api/animals-media
+Accept: APPLICATION/JSON;VERSION=v1

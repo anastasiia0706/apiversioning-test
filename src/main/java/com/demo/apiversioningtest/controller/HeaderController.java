@@ -3,14 +3,17 @@ package com.demo.apiversioningtest.controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/animals")
+@RequestMapping("/api/animals-header")
 public class HeaderController {
+
+    @GetMapping
+    public String getAnimalsDefaultVersionIsSetToV2() { return "V2: Lion Leo 5 years old, Elephant Ellie 12 years old (header)"; }
 
     @GetMapping(version = "v1")
     public String getAnimalsV1() { return "V1: Lion, Elephant (header)"; }
 
     @GetMapping(version = "v2")
-    public String getAnimalsV2() { return "Header V2: Lion Leo 5 years old in Savannah, Elephant Ellie 12 years old in Plains";}
+    public String getAnimalsV2() { return "V2: Lion Leo 5 years old, Elephant Ellie 12 years old (header)";}
 
     @GetMapping(version = "v1.1")
     public String getAnimalsV1_1() {
@@ -25,8 +28,13 @@ public class HeaderController {
     @PostMapping(version = "v1")
     public String addAnimalV1(@RequestBody String animalName) { return "V1: Created animal: " + animalName + " (header)"; }
 
-    @GetMapping
-    public String getAnimalsDefault() {
-        return "Default (header)";
-    }
+    @PutMapping(value = "/{id}", version = "v1")
+    public String updateAnimalV1(@PathVariable int id, @RequestBody String animalName) { return "V1: Updated animal ID " + id + " to " + animalName + " (header)"; }
+
+    @PatchMapping(value = "/{id}", version = "v1")
+    public String patchAnimalV1(@PathVariable int id, @RequestBody String animalName) { return "V1: Patched animal ID " + id + " with " + animalName + " (header)"; }
+
+    @DeleteMapping(value = "/{id}", version = "v1")
+    public String deleteAnimalV1(@PathVariable int id) { return "V1: Deleted animal ID " + id + " (header)"; }
+
 }

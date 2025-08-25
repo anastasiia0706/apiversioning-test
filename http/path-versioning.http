@@ -14,36 +14,56 @@ GET http://localhost:8081/api/animals-old-path
 
 ### Path versioning (new)
 
+###
+# Default - no version specified
+GET http://localhost:8081/api/animals-path
+
+###
 # GET V1
-GET http://localhost:8081/api/v1/animals
+GET http://localhost:8081/api/v1/animals-path
 
 ###
 # GET V2
-GET http://localhost:8081/api/v2/animals
+GET http://localhost:8081/api/v2/animals-path
 
 ###
 # GET V1.1
-GET http://localhost:8081/api/v1.1/animals
+GET http://localhost:8081/api/v1.1/animals-path
 
 ###
 # GET Individual animal V1
-GET http://localhost:8081/api/v1/animals/1
+GET http://localhost:8081/api/v1/animals-path/1
 
 ###
 # POST V1
-POST http://localhost:8081/api/v1/animals
+POST http://localhost:8081/api/v1/animals-path
 Content-Type: text/plain
 
 Monkey
 
 ###
-# Default - no version specified
-GET http://localhost:8081/api/animals
+# PUT V1
+PUT http://localhost:8081/api/v1/animals-path/1
+Content-Type: text/plain
+
+Tiger
 
 ###
-# Invalid path structure
-GET http://localhost:8081/animals/v1/api
+# PATCH V1
+PATCH http://localhost:8081/api/v1/animals-path/1
+Content-Type: text/plain
+
+Zebra
 
 ###
-# Unsupported version
-GET http://localhost:8081/api/v99/animals
+# DELETE V1
+DELETE http://localhost:8081/api/v1/animals-path/1
+
+
+###
+# Invalid path (expected response code: 404)
+GET http://localhost:8081/animals-path/v1/api
+
+###
+# Unsupported version (expected response code: 400)
+GET http://localhost:8081/api/v99/animals-path
