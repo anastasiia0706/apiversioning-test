@@ -130,10 +130,11 @@ public class HeaderVersioningTest {
                 .andExpect(status().is4xxClientError());
     }
 
+    // returns default version - v2
     @Test
     void testAlternativeHeaderName() throws Exception {
         mockMvc.perform(get("/api/animals-header")
-                        .header("API-Version", "v2"))
+                        .header("API-Version", "v1.1"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(org.hamcrest.Matchers.containsString("V2: Lion Leo 5 years old, Elephant Ellie 12 years old (header)")));
     }

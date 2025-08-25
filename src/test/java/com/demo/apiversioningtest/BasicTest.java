@@ -17,7 +17,8 @@ public class BasicTest {
 
     @Test
     void testBasic() throws Exception {
-        mockMvc.perform(get("/test/basic"))
+        mockMvc.perform(get("/test/basic")
+                        .header("X-API-Version", "v1"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(org.hamcrest.Matchers.containsString("Basic test")));
     }

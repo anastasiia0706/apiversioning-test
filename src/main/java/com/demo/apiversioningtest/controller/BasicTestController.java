@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/test")
+@RequestMapping(value = "/test", version = "v1")
 public class BasicTestController {
 
     @GetMapping("/basic")

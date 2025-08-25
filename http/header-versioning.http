@@ -82,7 +82,7 @@ X-API-Version: v2
 ###
 # Alternative header name
 GET http://localhost:8081/api/animals-header
-API-Version: v2
+API-Version: v1.1
 
 ###
 # Case sensitivity

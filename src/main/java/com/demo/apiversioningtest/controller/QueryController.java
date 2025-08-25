@@ -3,7 +3,7 @@ package com.demo.apiversioningtest.controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/animals-query")
+@RequestMapping(value = "/api/animals-query")
 public class QueryController {
 
     @GetMapping

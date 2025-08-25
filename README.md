@@ -25,7 +25,7 @@ Out of scope: reactive stack, view controllers, functional routes, security, val
 - Java 21
 
 
-## AUTOMATION:
+## AUTOMATION TESTING:
 
 **PATH:** src/test/java/com/demo/apiversioningtest
 
@@ -34,7 +34,7 @@ Out of scope: reactive stack, view controllers, functional routes, security, val
 
 
 **STEPS:**  
-Run automation tests for:
+Run automation tests separately for:
 
 1. `BasicTest.java` - uncomment configs in `HeaderVersioningConfig.java`, other versioning configurations (path, query, media type) must be commented
 2. `PathVersioningTest.java` - uncomment configs in `PathVersioningConfig.java`, other versioning configurations (header, query, media type) must be commented
